@@ -1,2 +1,15 @@
+
+# Node.js dependencies
 /node_modules  
+
+# macOS specific files
 .DS_Store  
+
+# Environment variables
+.env
+
+# Ignore the temp.txt file
+temp.txt
+fileA.txt
+fileB.txt
+big.txt

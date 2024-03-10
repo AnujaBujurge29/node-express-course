@@ -1,10 +1,8 @@
 const http = require("http");
-constqs = require('querystring')
-
+const qs = require('querystring')
 
 // var StringDecoder = require("string_decoder").StringDecoder;
 // new comment for point 5
-
 
 // Generate a random number between 1 and 100 for the user to guess
 let randomNumber = Math.floor(Math.random() * 100) + 1;
@@ -57,6 +55,9 @@ const server = http.createServer((req, res) => {
   }
 });
 
+server.on("request", (req) => {
+  console.log("event received: ", req.method, req.url);
+});
 // Listen for incoming requests on port 3000
 server.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
