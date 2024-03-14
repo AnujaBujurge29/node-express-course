@@ -1,11 +1,24 @@
 const http = require("http");
-const qs = require('querystring')
+var StringDecoder = require("string_decoder").StringDecoder;
 
-// var StringDecoder = require("string_decoder").StringDecoder;
-// new comment for point 5
-
-// Generate a random number between 1 and 100 for the user to guess
-let randomNumber = Math.floor(Math.random() * 100) + 1;
+const getBody = (req, callback) => {
+  const decode = new StringDecoder("utf-8");
+  let body = "";
+  req.on("data", function (data) {
+    body += decode.write(data);
+  });
+  req.on("end", function () {
+    body += decode.end();
+    const body1 = decodeURI(body);
+    const bodyArray = body1.split("&");
+    const resultHash = {};
+    bodyArray.forEach((part) => {
+      const partArray = part.split("=");
+      resultHash[partArray[0]] = partArray[1];
+    });
+    callback(resultHash);
+  });
+};
 
 // Function to display the HTML form for the number guessing game
 const displayForm = (message = '') => {
