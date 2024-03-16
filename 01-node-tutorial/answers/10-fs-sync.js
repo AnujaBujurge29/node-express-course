@@ -32,8 +32,8 @@ console.log('Second File');
 console.log(secondFile);
 
 
-// writeFileSync(
-//     '../content/results-sync.txt', `RRResult: ${firstFileUTF}, ${secondFile}.`,
-//     // { flag: 'a' }
-//     // upend the file with above command otherwise it will replace original file
-// )
+writeFileSync(
+    '../content/results-sync.txt', `RRResult: ${firstFileUTF}, ${secondFile}.`,
+    // { flag: 'a' }
+    // upend the file with above command otherwise it will replace original file
+)
