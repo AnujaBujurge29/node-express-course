@@ -1,57 +1,44 @@
 const express = require('express');
 const app = express();
-const { products } = require("./data");
+
+const peopleRouter = require('./routes/people')
+const productRouter = require('./routes/products')
+const authRouter = require('./routes/auth')
 // Set up the port to listen on
 const PORT = process.env.PORT || 3000;
 console.log('Express Tutorial')
 
+// Middleware function to log method, url, and current time
 
-// Serve static files from the 'public' directory
-app.use(express.static('./public'));
+
+const logger = (req, res, next) => {
+    const method = req.method
+    const url = req.url
+    const timeYear = new Date().getFullYear()
+    const timeMonth = new Date().getMonth()
+    console.log(`Method: ${method},\nUrl: ${url},\nYear: ${timeYear},\nMonth: ${timeMonth}`)
+    next()
+}
+// static files from the 'public' directory
+app.use(express.static('./methods-public'));
+
+// Middleware
+app.use(express.urlencoded({ extended: false }));
+
+//Parse request body into JSON
+app.use(express.json());
+
+
+// Logging middleware called via app.use() statement for all paths
+app.use(logger);
 
 // Endpoint to return all products
-app.get('/api/v1/products', (req, res) => {
-    res.json(products);
-});
+
+app.use('/api/v1/people', peopleRouter)
+app.use('/api/v1/products', productRouter)
+app.use('/login', authRouter)
 
 
-app.get('/api/v1/products/:productID', (req, res) => {
-    const idToFind = parseInt(req.params.productID);
-    const product = products.find((p) => p.id === idToFind);
-
-    if (product) {
-        res.json(product);
-    } else {
-        res.status(404).json({ message: 'That product was not found.' });
-    }
-});
-
-// Endpoint to search products by name and limit
-app.get('/api/v1/query', (req, res) => {
-    const { search, limit } = req.query;
-    let filteredProducts = [...products];
-
-    if (search) {
-        filteredProducts = filteredProducts.filter(product => product.name.toLowerCase().startsWith(search.toLowerCase()));
-    }
-    if (limit) {
-        filteredProducts = filteredProducts.slice(0, parseInt(limit));
-    }
-
-    res.json(filteredProducts);
-});
-
-
-// Example: Filtering products based on price
-app.get('/api/v1/products/price/:maxPrice', (req, res) => {
-    const maxPrice = parseFloat(req.params.maxPrice);
-    const filteredProducts = products.filter(product => product.price <= maxPrice);
-    res.json(filteredProducts);
-});
-
-app.use((req, res) => {
-    res.status(404).send("404 Not Found");
-})
 
 // Start the server
 app.listen(PORT, () => {
