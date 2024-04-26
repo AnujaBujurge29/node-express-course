@@ -13,6 +13,8 @@ Find the App Useful? [You can always buy me a coffee](https://www.buymeacoffee.c
 1. Node Tutorial
 2. Express Tutorial
 3. Task Manager (MongoDB, Mongoose)
+   install mongoose
+   npm install mongoose --save
 4. Store API
 5. JWT Basics
 6. Jobs API
