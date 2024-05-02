@@ -1,0 +1,6 @@
+1. In this lesson, you created a middleware function called asyncWrapper. Why?
+Answer:
+The asyncWrapper middleware simplifies error handling in Express route handlers by encapsulating them with a try-catch block. 
+It ensures consistent error handling across handlers, promotes code readability, and adheres to best practices for asynchronous code.
+
+2. 
