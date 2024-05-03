@@ -4,3 +4,14 @@ The asyncWrapper middleware simplifies error handling in Express route handlers 
 It ensures consistent error handling across handlers, promotes code readability, and adheres to best practices for asynchronous code.
 
 2. 
+Answer:
+const getTask = asyncWrapper(async (req, res, next) => {  
+  const { id: taskID } = req.params;  
+  const task = await Task.findOne({ _id: taskID });  
+  if (!task) {  
+    // your code here  
+    return next(CustomAPIError(`No Taks found with id: ${tasksID}`, 404))
+
+  }  
+  res.status(200).json({ task });  
+});  
